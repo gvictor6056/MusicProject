@@ -3,6 +3,7 @@ import ddf.minim.*;
 Minim minim;
 AudioPlayer song;
 AudioInput in;
+//minim is the audio library allowing for us to play and pull the music in
 
 boolean lerping = true;
 
@@ -65,10 +66,12 @@ class Fish {
 
 Fish jimmy = new Fish(); //create Jimmy
 
+
 void setup() {
   fullScreen();
   noSmooth();
-  colorMode(HSB, 255);
+  colorMode(255);
+//sets the screen size and color for moon
   stepsX = (width) / linesX;
   stepsY = (height) / linesY;
   // initialize nodes
@@ -77,6 +80,7 @@ void setup() {
       Nodes[i][j] = new Node((i+0.5)*stepsX, (j+0.5)*stepsY, 2);
     }
   }
+// tells minim to locate the song file and play it
   minim = new Minim(this);
   song = minim.loadFile("Tobu - Higher.mp3");
  
@@ -86,7 +90,7 @@ void setup() {
   textAlign(LEFT);
 }
 
-
+//enacts a "command" for when a key is pressing, in our case ESC closes the window
 void keyPressed() {
   switch(key) {
   case ' ':
@@ -131,12 +135,13 @@ void draw() {
   fill (255,255,204);
   ellipse(300, 300, 300, 300);
  
+
   ellipseMode(RADIUS);
   fill (0);
   ellipse(260, 270, 270, 270);
  
 }
-  
+  // creates sound waves that change in frequency and amplitude
   for(int i = 0; i < song.bufferSize() - 1; i++)
   {
     float x1 = map( i, 0, song.bufferSize(), 0, width );
@@ -144,13 +149,5 @@ void draw() {
     line( x1, 50 + song.left.get(i)*50, x2, 50 + song.left.get(i+1)*50 );
     line( x1, 150 + song.right.get(i)*50, x2, 150 + song.right.get(i+1)*50 );
   }
-  
-  // draw a line to show where in the song playback is currently located
-  float posx = map(song.position(), 0, song.length(), 0, width);
-  stroke(0);
-  line(posx, 0, posx, height);
- 
- 
-  
-  
+   
 }
