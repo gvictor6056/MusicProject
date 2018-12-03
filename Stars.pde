@@ -3,6 +3,7 @@ class Star {
   // variables specify the x and y of each star
   float x;
   float y;
+
   // this z variable wil be used in a formula to modify the stars position
   float z;
 
@@ -41,25 +42,32 @@ class Star {
   }
 
   void show() {
+  
+ //yellow
+   fill(255,255,0);
+    
+    //purple
+    fill(250,0,250);
+   
+     float temp= random(0, 100);
+    {
+   if (temp > 50 )
+       //white
     fill(255,255,255);
-  
-  
- //GREEN
-  fill(0,9);
-  
-  fill(0,250,9); 
- 
-  //PURPLE
-   fill(0,9);
-  
-  fill(250,0,250); 
-
-  //BLUE
-  
-  fill(0,9);
- 
- 
- 
+   else 
+      //green  
+    fill(0,250,0);
+    }
+   {
+     if (temp > 50)
+     //red
+      fill(255, 0, 0);
+  else
+  //blue
+    fill(0,0,255);
+   }
+    
+    
     noStroke();
 
     // map will give new star positions
@@ -69,7 +77,7 @@ class Star {
     // and which they finish their travel outside of the canvas (they finish when "z" is less than a).
 
     float sx = map(x / z, 0, 1, 0, width/2);
-    float sy = map(y / z, 0, 1, 0, height/2);;
+    float sy = map(y / z, 0, 1, 0, height/2);
 
     //the z value to increase the star size between a range from 0 to 16.
     float r = map(z, 0, width/2, 16, 0);
@@ -86,4 +94,4 @@ class Star {
     line(px, py, sx, sy);
 
   }
-}
+  }
