@@ -1,0 +1,73 @@
+import ddf.minim.*;
+AudioPlayer player;
+Minim minim;
+ 
+boolean playeurInit = false;// que leplayer n'est pas lancé
+boolean stop = true;
+ 
+StringList tableau;
+int current=0;
+ 
+void setup() {
+  size(100, 100);
+  minim = new Minim(this);
+ 
+  //ADD sound files to your list
+  tableau=new StringList();
+  tableau.append("Imagine Dragons - Thunder.mp3");
+  tableau.append("OneRepublic - I Lived.mp3");
+  tableau.append("Hall Of Fame.mp3");
+  tableau.append("Coldplay - Hymn For The Weekend.mp3");
+  tableau.append("Am I Wrong.mp3");
+  tableau.append("Alan Walker - Tired.mp3");
+ 
+  shufflePlayList();
+  String son = tableau.get(current++);
+  println(son);
+  player = minim.loadFile(son);
+  player.pause();
+ 
+  background(0);
+}
+ 
+void draw() {
+ 
+  if (!stop) {
+ 
+    if (player.isPlaying() == false) {
+ 
+      //CHECK we haven't exhausted the current shuffled(random) play list
+      //If we have played all the songs, then re-shuffle the list
+      if (current==tableau.size()-1) {
+        shufflePlayList();
+      }
+ 
+      String son = tableau.get(current++);
+      player = minim.loadFile(son);
+      player.play();      
+      playeurInit = true;
+    }
+  }
+}
+ 
+void mouseReleased() {
+  if (stop == true) {
+    stop = false;
+  } else {
+    stop = true;
+    if (player.isPlaying() == true ) {
+      player.pause();
+    }
+  }
+}
+ 
+void stop() {
+  player.close();
+  minim.stop();
+  super.stop();
+}
+ 
+void shufflePlayList() {
+  current=0;
+  tableau.shuffle();
+}
